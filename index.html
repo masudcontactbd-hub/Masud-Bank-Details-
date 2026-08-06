@@ -1,6 +1,201 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Bank Details</title><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:Arial;background:#111;display:flex;align-items:center;justify-content:center;padding:15px;color:#f5d67b}.card{width:100%;max-width:500px;background:#1b1b1b;border:2px solid #d4af37;border-radius:20px;padding:25px}.row{display:flex;justify-content:space-between;align-items:center;background:#242424;padding:14px;border-radius:12px;margin:12px 0;gap:10px}label{font-weight:bold}.value{color:#fff;margin-top:5px}button{background:#d4af37;border:0;padding:10px 14px;border-radius:10px;font-weight:bold}button.copied{background:#4CAF50;color:#fff}</style></head><body><div class='card'><h2>✦ BANK DETAILS ✦</h2><div id='list'></div></div><script>
-function fallbackCopy(t){let a=document.createElement('textarea');a.value=t;a.style.position='fixed';a.style.opacity='0';document.body.appendChild(a);a.select();document.execCommand('copy');a.remove();}
-function copyToClipboard(t,b){if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).catch(()=>fallbackCopy(t));}else{fallbackCopy(t);}let o=b.innerHTML;b.innerHTML='Copied!';b.classList.add('copied');setTimeout(()=>{b.innerHTML=o;b.classList.remove('copied');},1500);}
-function add(l,v){document.getElementById('list').insertAdjacentHTML('beforeend',`<div class="row"><div><label>${l}</label><div class="value">${v}</div></div><button onclick="copyToClipboard('${v}',this)">Copy</button></div>`);}
-add('Account Name','MD Masud Rana');add('Account Number','1061560000151');add('Routing Number','095261188');add('Bank','Eastern Bank Limited');add('Branch','Dhanmondi Branch');add('Account Type','Savings Account');
-</script></body></html>
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Details</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --border: rgba(255, 255, 255, 0.1);
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --subtext: #94a3b8;
+      --success: #10b981;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e293b, #0f172a);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .info-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .info-card {
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+    }
+
+    .info-card:hover {
+      border-color: rgba(56, 189, 248, 0.4);
+    }
+
+    .details {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .label {
+      font-size: 0.75rem;
+      color: var(--subtext);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      word-break: break-all;
+    }
+
+    .copy-btn {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: var(--accent);
+      color: #0f172a;
+    }
+
+    .copy-btn.copied {
+      background: var(--success);
+      color: #ffffff;
+      border-color: var(--success);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <h2>✦ BANK DETAILS ✦</h2>
+    </div>
+
+    <div class="info-group">
+      <div class="info-card">
+        <div class="details">
+          <span class="label">Account Name</span>
+          <span class="value" id="name">MD Masud Rana</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('name', this)">Copy</button>
+      </div>
+
+      <div class="info-card">
+        <div class="details">
+          <span class="label">Account Number</span>
+          <span class="value" id="acc">1061560000151</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('acc', this)">Copy</button>
+      </div>
+
+      <div class="info-card">
+        <div class="details">
+          <span class="label">Routing Number</span>
+          <span class="value" id="routing">095261188</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('routing', this)">Copy</button>
+      </div>
+
+      <div class="info-card">
+        <div class="details">
+          <span class="label">Bank</span>
+          <span class="value" id="bank">Eastern Bank Limited</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('bank', this)">Copy</button>
+      </div>
+
+      <div class="info-card">
+        <div class="details">
+          <span class="label">Branch</span>
+          <span class="value" id="branch">Dhanmondi Branch</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('branch', this)">Copy</button>
+      </div>
+
+      <div class="info-card">
+        <div class="details">
+          <span class="label">Account Type</span>
+          <span class="value" id="type">Savings Account</span>
+        </div>
+        <button class="copy-btn" onclick="copyText('type', this)">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyText(elementId, btn) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerText = "Copied!";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.innerText = "Copy";
+          btn.classList.remove("copied");
+        }, 1500);
+      });
+    }
+  </script>
+
+</body>
+</html>
